@@ -99,7 +99,9 @@ class StockCycleCountRule(models.Model):
         """Get the warehouses for the selected locations."""
         wh_ids = []
         for loc in self.location_ids:
-            wh_ids.append(loc.get_warehouse().id)
+            warehouse_id = loc.get_warehouse()
+            if warehouse_id:
+                wh_ids.append(warehouse_id.id)
         wh_ids = list(set(wh_ids))
         self.warehouse_ids = self.env["stock.warehouse"].browse(wh_ids)
 
